@@ -1,0 +1,16 @@
+#!/bin/bash
+#阿里源安装docker
+#中科大docker加速{"registry-mirrors":["https://docker.mirrors.ustc.edu.cn/"]}
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup 
+curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+yum install -y yum-utils device-mapper-persistent-data lvm2
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+yum install -y docker-ce
+systemctl start docker
+systemctl enable docker
+echo -e '{\n  "registry-mirrors":["https://j0x8m848.mirror.aliyuncs.com"]\n}' > /etc/docker/daemon.json
+systemctl restart docker
+echo '####################################'
+echo '##docker installation is complete!##'
+echo '####################################'
+exit 0
